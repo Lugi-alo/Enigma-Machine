@@ -1,44 +1,48 @@
+import string
+
 from rotor import Rotor
 from reflector import Reflector
 from plugboard import Plugboard
+
+alphabet = string.ascii_uppercase
 
 class Enigma:
 
     def __init__(self):
         self.rotors = []
+        self.plugboards = []
         self.setup()
 
     def setup(self):
 
-        #initialise the first rotor
-        rotorWiringI = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-        rotorNotchI = 'Q'
+        # Initialise reflector
+        reflectorWiring = "EJMZALYXVBWFCRQUONTSPIHGKD"
+        reflectorInstance = Reflector(reflectorWiring)
+        self.reflector = reflectorInstance
 
-        reflectorInstanceI = Reflector(rotorWiringI)
-        plugboardInstanceI = Plugboard(rotorWiringI)
-
-        rotorInstanceI = Rotor(rotorWiringI, rotorNotchI)
-        self.rotors.append(rotorInstanceI)
-
-        #initialise the second rotor
-        rotorWiringII = "AJDKSIRUXBLHWTMCQGZNPYFVOE"
-        rotorNotchII = 'E'
+        # Dictionary of rotors
+        rotorSettings =["EKMFLGDQVZNTOWYHXUSPAIBRCJ", 'Q',
+                         "AJDKSIRUXBLHWTMCQGZNPYFVOE", 'E',
+                         "BDFHJLCPRTXVZNYEIWGAKMUSQO", 'V'
+                        ]
         
-        reflectorInstanceII = Reflector(rotorWiringII)
-        plugboardInstanceII = Plugboard(rotorWiringII)
+        # Add rotors
+        for wiring, notch in rotorSettings:
+            self.addRotorPlugboard(wiring, notch)
 
-        rotorInstanceII = Rotor(rotorWiringII, rotorNotchII)
-        self.rotors.append(rotorInstanceII)
-        
-        #initialise the third rotor
-        rotorWiringIII = "BDFHJLCPRTXVZNYEIWGAKMUSQO"
-        rotorNotchIII = 'V'
+    def addRotorPlugboard(self, wiring, notch)
+        swap = []
 
-        reflectorInstanceIII = Reflector(rotorWiringII)
-        plugboardInstanceIII = Plugboard(rotorWiringIII)
+        # Set up pairs
+        for i in range(26):
+            swap.append((alphabet[i], wiring[i]))
 
-        rotorInstanceIII = Rotor(rotorWiringIII, rotorNotchIII)
-        self.rotors.append(rotorInstanceIII)
+        # Initialise plugboard 
+        plugboardInstance = Plugboard(swap)
+        self.plugboards.append(plugboardInstance)
 
-        return [rotorInstanceI, rotorInstanceII, rotorInstanceIII]
+        # Initialise rotor
+        rotorInstance = Rotor(wiring, notch)
+        self.rotors.append(rotorInstance)
+            
 
