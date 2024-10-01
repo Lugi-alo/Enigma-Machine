@@ -10,14 +10,14 @@ class Rotor:
         return self.wiring[self.position] == self.notch
 
     def forward(self, letter):
-        number = ord(letter) - 97
+        number = ord(letter) - ord('A')
         rearrangedNumber = (number + self.position) % 26
-        return chr(rearrangedNumber + 97)
+        return chr(rearrangedNumber + ord('A'))
         
     def backward(self, letter):
         number = self.wiring.index(letter)
         rearrangedNumber = (number - self.position) % 26
-        return chr(rearrangedNumber + 97)
+        return chr(rearrangedNumber + ord('A'))
         
     
 
