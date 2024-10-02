@@ -1,12 +1,21 @@
+import string
+
+alphabet = string.ascii_uppercase
+
 class Plugboard:
     
-    def __init__(self, wiring):
-        self.wiring = {}
-        for char in string.ascii_uppercase:
-            self.wiring[char] = char
+    def __init__(self, swap=None):
+        self.mapping = {}
+
+        if swap is None:
+            swap = []
+            
+        for letter in alphabet:
+            self.mapping[letter] = letter
+            
+        for a, b in swap:
+            self.mapping[a] = b
+            self.mapping[b] = a
 
     def swap(self, letter):
-        return self.wiring.get(letter, letter)
-        
-        
-
+        return self.mapping.get(letter, letter)

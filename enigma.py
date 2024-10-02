@@ -7,42 +7,41 @@ from plugboard import Plugboard
 alphabet = string.ascii_uppercase
 
 class Enigma:
-
+    
     def __init__(self):
         self.rotors = []
-        self.plugboards = []
+        self.plugboard = []
+        self.reflector = None
         self.setup()
 
     def setup(self):
-
+        
         # Initialise reflector
         reflectorWiring = "EJMZALYXVBWFCRQUONTSPIHGKD"
-        reflectorInstance = Reflector(reflectorWiring)
-        self.reflector = reflectorInstance
+        self.reflector = Reflector(reflectorWiring)
 
-        # Dictionary of rotors
-        rotorSettings =["EKMFLGDQVZNTOWYHXUSPAIBRCJ", 'Q',
-                         "AJDKSIRUXBLHWTMCQGZNPYFVOE", 'E',
-                         "BDFHJLCPRTXVZNYEIWGAKMUSQO", 'V'
-                        ]
-        
-        # Add rotors
+        # Tuples of rotors
+        rotorSettings = [
+            ("EKMFLGDQVZNTOWYHXUSPAIBRCJ", 'Q'),
+            ("AJDKSIRUXBLHWTMCQGZNPYFVOE", 'E'),
+            ("BDFHJLCPRTXVZNYEIWGAKMUSQO", 'V')
+        ]
+
+        # Add rotors 
         for wiring, notch in rotorSettings:
-            self.addRotorPlugboard(wiring, notch)
+            rotorInstance = Rotor(wiring, notch)
+            self.rotors.append(rotorInstance)
 
-    def addRotorPlugboard(self, wiring, notch)
-        swap = []
+        # Initialise plugboard
+        swaps = []
+        for i in range(len(alphabet)):
+            swaps.append((alphabet[i], wiring[i]))
+        
+        plugboardInstance = Plugboard(swaps)
+        self.plugboard.append(plugboardInstance)
 
-        # Set up pairs
-        for i in range(26):
-            swap.append((alphabet[i], wiring[i]))
 
-        # Initialise plugboard 
-        plugboardInstance = Plugboard(swap)
-        self.plugboards.append(plugboardInstance)
-
-        # Initialise rotor
-        rotorInstance = Rotor(wiring, notch)
-        self.rotors.append(rotorInstance)
-            
-
+# Main function
+if __name__ == "__main__":
+    enigmaMachine = Enigma()
+    enigmaMachine.run()

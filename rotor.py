@@ -12,7 +12,7 @@ class Rotor:
     def forward(self, letter):
         number = ord(letter) - ord('A')
         rearrangedNumber = (number + self.position) % 26
-        return chr(rearrangedNumber + ord('A'))
+        return self.wiring[rearrangedNumber]
         
     def backward(self, letter):
         number = self.wiring.index(letter)
