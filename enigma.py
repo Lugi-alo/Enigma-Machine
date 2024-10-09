@@ -55,16 +55,16 @@ class Enigma:
     def encryption(self, letter):
         
         self.rotorRotation()
-        print(f"\nEncrypting letter: {letter}")
+        print("\nEncrypting letter: " + letter)
 
         # Plugboard swap before rotors 
         letter = self.plugboard[0].swap(letter)
-        print(f"After plugboard (Rotor 1): {letter}")
+        print("After plugboard Rotor 1: "  + letter)
 
         # Forward pass through rotors
         for i, rotor in enumerate(self.rotors):
             letter = rotor.forward(letter)
-            print(f"After rotor {i+1} forward: {letter}")
+            print("After rotor " + str(i+1) + " forward: " + letter)
 
         # Reflector
         letter = self.reflector.reflect(letter)
@@ -73,7 +73,7 @@ class Enigma:
         # Backward pass through rotors
         for i, rotor in enumerate(reversed(self.rotors)):
             letter = rotor.backward(letter)
-            print("After rotor " + str(len(self.rotors)-i) + "backward: " + letter)
+            print("After rotor " + str(len(self.rotors)-i) + " backward: " + letter)
 
         # Use the plugboard corresponding to the last rotor after encrypting
         letter = self.plugboard[-1].swap(letter)
